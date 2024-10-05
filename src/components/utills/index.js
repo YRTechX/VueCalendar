@@ -21,12 +21,12 @@ export function localstorageHandler(payload) {
             break;
 
         case "delete":
-            if (events[data.id]) {
-                delete events[data.id];
+            if (events[data]) {
+                delete events[data];
 
                 localStorage.setItem("events", JSON.stringify(events));
             } else {
-                console.error(`Event with id ${data.id} not found.`);
+                console.error(`Event with id ${data} not found.`);
             }
             break;
 

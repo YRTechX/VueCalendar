@@ -5,14 +5,16 @@
             :key="index"
             :event="event"
             @edit-event="handleEditEvent"
+            @delete-event="handleDeleteEvent"
         />
     </div>
 </template>
 
 <script setup>
 import MyEvent from "@/components/UI/MyEvent.vue";
+
 import { computed } from "vue";
-const emit = defineEmits(["edit-event"]);
+const emit = defineEmits(["edit-event", "delete-event"]);
 const props = defineProps({
     events: {
         type: Object,
@@ -30,6 +32,11 @@ const sortedEvents = computed(() => {
 
 const handleEditEvent = (event) => {
     emit("edit-event", event);
+};
+
+const handleDeleteEvent = (id) => {
+    console.log("handleDeleteEvent", id);
+    emit("delete-event", id);
 };
 </script>
 

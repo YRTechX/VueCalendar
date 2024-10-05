@@ -72,6 +72,7 @@
                             <MyEvents
                                 :events="getEventsByDate(item.fullDate)"
                                 @edit-event="editEventEmitHandler"
+                                @delete-event="deleteEvent"
                             ></MyEvents>
                         </template>
                     </div>
@@ -81,9 +82,10 @@
     </div>
     <EventPopup
         ref="tippyContent"
-        @closePopup="closePopup"
-        @saveEvent="saveEvent"
-        @editEvent="editEvent"
+        @close-popup="closePopup"
+        @save-event="saveEvent"
+        @edit-event="editEvent"
+        @delete-event="deleteEvent"
         :event="editEventObj"
     ></EventPopup>
 </template>
@@ -172,6 +174,16 @@ const editEvent = (data) => {
         console.log("Event not found");
     }
     closePopup();
+};
+const deleteEvent = (id) => {
+    console.log("deleteEvent", deleteEvent);
+    const eventToDelete = events[id];
+    if (eventToDelete) {
+        if (window.confirm("Are you sure you want delete this event?")) {
+            delete events[id];
+            localstorageHandler({ actionType: "delete", data: id });
+        }
+    }
 };
 
 const editEventEmitHandler = (data) => {
@@ -511,10 +523,6 @@ const isLoading = ref(false);
             margin-left: 4px;
         }
 
-        .copy-icon {
-            background-image: url("@/assets/images/copy-icon.svg");
-        }
-
         .link-input {
             width: 100%;
             height: 32px;
@@ -553,24 +561,6 @@ const isLoading = ref(false);
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
-    }
-
-    .share-icons-wrapper {
-        display: flex;
-        justify-content: space-around;
-        padding-top: 10px;
-
-        .twitter-icon {
-            background-image: url("@/assets/images/twitter-icon.svg");
-        }
-
-        .facebook-icon {
-            background-image: url("@/assets/images/facebook-icon.svg");
-        }
-
-        .linked-in-icon {
-            background-image: url("@/assets/images/linked-in-icon.svg");
-        }
     }
 }
 </style>
